@@ -1,0 +1,3 @@
+"use client";
+import { motion } from "framer-motion";
+export function LogoReveal() { return <motion.div className="fixed inset-0 z-50 grid place-items-center bg-canvas" initial={{ opacity: 1 }} exit={{ opacity: 0 }}><motion.div initial={{ opacity: 0, y: 18, letterSpacing: "0.32em" }} animate={{ opacity: 1, y: 0, letterSpacing: "0.14em" }} transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }} className="text-center"><p className="font-display text-2xl text-white sm:text-4xl">AKSHAY MARKAD</p><span className="mt-3 block text-[10px] uppercase tracking-[0.3em] text-gold">Photography</span></motion.div></motion.div>; }
