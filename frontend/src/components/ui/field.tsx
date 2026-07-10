@@ -1,0 +1,8 @@
+import { forwardRef, type InputHTMLAttributes, type LabelHTMLAttributes, type SelectHTMLAttributes, type TextareaHTMLAttributes } from "react";
+import { cn } from "@/utils/cn";
+const control = "w-full rounded-sm border border-white/10 bg-white/[0.03] px-4 py-3 text-white placeholder:text-white/45 transition-colors focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold disabled:cursor-not-allowed disabled:opacity-50";
+export function Label({ className, ...props }: LabelHTMLAttributes<HTMLLabelElement>) { return <label className={cn("mb-2 block text-sm font-medium text-white", className)} {...props} />; }
+export const Input = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputElement>>(function Input({ className, ...props }, ref) { return <input ref={ref} className={cn(control, className)} {...props} />; });
+export const Textarea = forwardRef<HTMLTextAreaElement, TextareaHTMLAttributes<HTMLTextAreaElement>>(function Textarea({ className, ...props }, ref) { return <textarea ref={ref} className={cn(control, "min-h-32 resize-y", className)} {...props} />; });
+export const Select = forwardRef<HTMLSelectElement, SelectHTMLAttributes<HTMLSelectElement>>(function Select({ className, children, ...props }, ref) { return <select ref={ref} className={cn(control, className)} {...props}>{children}</select>; });
+export const Checkbox = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputElement>>(function Checkbox({ className, ...props }, ref) { return <input ref={ref} type="checkbox" className={cn("h-4 w-4 rounded border-white/20 bg-transparent text-gold focus:ring-gold focus:ring-offset-canvas", className)} {...props} />; });

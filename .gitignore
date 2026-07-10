@@ -11,6 +11,7 @@ target/
 .idea/
 .vscode/
 *.iml
+*.tsbuildinfo
 
 # Operating system files
 .DS_Store

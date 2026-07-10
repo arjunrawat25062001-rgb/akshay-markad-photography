@@ -1,0 +1,4 @@
+"use client";
+import { motion, useMotionValue, useSpring } from "framer-motion";
+import { useEffect } from "react";
+export function CustomCursor({ enabled = false }: { enabled?: boolean }) { const x = useSpring(useMotionValue(-100), { stiffness: 500, damping: 35 }); const y = useSpring(useMotionValue(-100), { stiffness: 500, damping: 35 }); useEffect(() => { if (!enabled || !window.matchMedia("(pointer: fine)").matches) return; const move = (event: PointerEvent) => { x.set(event.clientX); y.set(event.clientY); }; window.addEventListener("pointermove", move); return () => window.removeEventListener("pointermove", move); }, [enabled, x, y]); if (!enabled) return null; return <motion.div aria-hidden="true" className="pointer-events-none fixed left-0 top-0 z-[60] hidden h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border border-gold mix-blend-difference md:block" style={{ x, y }} />; }

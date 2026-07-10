@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root { color-scheme: dark; }
+  * { @apply border-white/10; }
+  html { @apply scroll-smooth bg-canvas; }
+  body { @apply min-h-screen bg-canvas font-body text-white antialiased; }
+  ::selection { @apply bg-gold text-black; }
+  :focus-visible { @apply outline-none ring-2 ring-gold ring-offset-2 ring-offset-canvas; }
+}
+
+@layer components {
+  .container-luxury { @apply mx-auto w-full max-w-7xl px-5 lg:px-8; }
+  .eyebrow { @apply text-xs font-semibold uppercase tracking-[0.2em] text-gold; }
+}
+
+@layer utilities {
+  .text-display-xl { @apply font-display text-5xl leading-[0.98] tracking-tight sm:text-6xl lg:text-8xl; }
+  .text-display-lg { @apply font-display text-4xl leading-tight sm:text-5xl lg:text-6xl; }
+  .text-heading { @apply font-display text-3xl leading-tight sm:text-4xl; }
+  .text-body { @apply text-base leading-7 text-text-secondary; }
+}

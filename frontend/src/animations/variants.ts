@@ -1,0 +1,12 @@
+import type { Variants } from "framer-motion";
+const transition = { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const };
+export const fadeUp: Variants = { hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0, transition } };
+export const fadeLeft: Variants = { hidden: { opacity: 0, x: -24 }, visible: { opacity: 1, x: 0, transition } };
+export const fadeRight: Variants = { hidden: { opacity: 0, x: 24 }, visible: { opacity: 1, x: 0, transition } };
+export const scaleIn: Variants = { hidden: { opacity: 0, scale: 0.96 }, visible: { opacity: 1, scale: 1, transition } };
+export const staggerChildren: Variants = { hidden: {}, visible: { transition: { staggerChildren: 0.12, delayChildren: 0.08 } } };
+export const heroReveal: Variants = { hidden: { opacity: 0, y: 36 }, visible: { opacity: 1, y: 0, transition: { ...transition, duration: 0.9 } } };
+export const sectionReveal = fadeUp;
+export const imageHover = { rest: { scale: 1 }, hover: { scale: 1.04, transition: { duration: 0.5 } } };
+export const pageTransition: Variants = { initial: { opacity: 0 }, animate: { opacity: 1, transition: { duration: 0.35 } }, exit: { opacity: 0, transition: { duration: 0.2 } } };
+export const parallax = (offset = 32) => ({ initial: { y: offset }, animate: { y: -offset } });
