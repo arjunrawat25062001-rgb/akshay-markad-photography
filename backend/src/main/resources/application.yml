@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: akshay-markad-photography-api
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
