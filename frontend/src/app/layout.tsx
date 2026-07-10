@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import Script from "next/script";
+import QueryProviderClient from "@/components/QueryProviderClient";
 import { Footer } from "@/components/layout/footer";
 import { Navbar } from "@/components/layout/navbar";
 import { CustomCursor } from "@/components/shared/custom-cursor";
@@ -14,5 +15,16 @@ const playfair = Playfair_Display({ variable: "--font-playfair", subsets: ["lati
 export const metadata: Metadata = createMetadata({ description: "Akshay Markad is a luxury photographer documenting meaningful celebrations with a refined, editorial perspective." });
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en" className={`${inter.variable} ${playfair.variable}`}><body><Script id="local-business-schema" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(createLocalBusinessJsonLd()) }} /><CustomCursor /><Navbar /><PageTransition>{children}</PageTransition><Footer /></body></html>;
+  const queryClient = new QueryClient();
+  return <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
+    <body>
+      <Script id="local-business-schema" type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(createLocalBusinessJsonLd()) }} />
+      <CustomCursor />
+      <Navbar />
+      <QueryProviderClient>
+        <PageTransition>{children}</PageTransition>
+      </QueryProviderClient>
+      <Footer />
+    </body>
+  </html>;
 }

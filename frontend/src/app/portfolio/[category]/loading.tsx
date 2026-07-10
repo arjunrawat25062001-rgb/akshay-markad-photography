@@ -1,0 +1,1 @@
+export default function Loading() { return <div className="container-luxury py-28"><p className="text-center text-white/70">Loading portfolio category…</p></div>; }
