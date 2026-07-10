@@ -1,6 +1,12 @@
-import { api } from "./api";
+import { api, unwrapApiData } from "./api";
 
-export async function sendContact(payload: any) {
-  const res = await api.post("/api/contact", payload);
-  return res.data?.data || res.data;
+export type ContactPayload = {
+  name: string;
+  email: string;
+  message: string;
+};
+
+export async function sendContact(payload: ContactPayload) {
+  const response = await api.post("/api/contact", payload);
+  return unwrapApiData<string>(response);
 }

@@ -1,6 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
-import { createBooking } from "@/lib/api/booking";
+import { createBooking, type CreateBookingPayload } from "@/lib/api/booking";
 
 export function useCreateBooking() {
-  return useMutation((payload: any) => createBooking(payload));
+  return useMutation({
+    mutationFn: (payload: CreateBookingPayload) => createBooking(payload),
+  });
 }

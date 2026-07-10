@@ -1,5 +1,5 @@
-import { api } from "./api";
-import type { PortfolioItem, PortfolioCategory } from "@/types/portfolio";
+import { api, normalizeApiError, unwrapApiData } from "./api";
+import type { PortfolioCategory, PortfolioItem } from "@/types/portfolio";
 
 export type ListParams = {
   page?: number;
@@ -11,17 +11,33 @@ export type ListParams = {
   location?: string;
 };
 
+export type PortfolioPageResponse = {
+  content: PortfolioItem[];
+  totalElements?: number;
+  totalPages?: number;
+  number?: number;
+  size?: number;
+};
+
 export async function listPortfolio(params: ListParams = {}) {
-  const res = await api.get("/api/portfolio", { params });
-  return res.data; // Page<PortfolioItemDto>
+  const response = await api.get<PortfolioPageResponse>("/api/portfolio", { params });
+  return response.data;
 }
 
 export async function getPortfolioBySlug(slug: string) {
-  const res = await api.get(`/api/portfolio/${encodeURIComponent(slug)}`);
-  return res.data?.data || res.data;
+  try {
+    const response = await api.get<PortfolioItem>(`/api/portfolio/${encodeURIComponent(slug)}`);
+    return unwrapApiData<PortfolioItem>(response);
+  } catch (error) {
+    if (normalizeApiError(error).status === 404) {
+      return undefined;
+    }
+
+    throw error;
+  }
 }
 
 export async function listCategories(): Promise<PortfolioCategory[]> {
-  const res = await api.get("/api/portfolio/categories");
-  return res.data?.data || res.data;
+  const response = await api.get<PortfolioCategory[]>("/api/portfolio/categories");
+  return unwrapApiData<PortfolioCategory[]>(response);
 }

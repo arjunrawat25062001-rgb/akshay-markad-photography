@@ -1,18 +1,24 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import * as api from "@/lib/api/auth";
+import { login, logout, type LoginCredentials } from "@/lib/api/auth";
+import { queryKeys } from "@/lib/react-query/query-keys";
+import { createClearCacheSuccessHandler } from "@/lib/react-query/mutation-helpers";
 
 export function useLogin() {
-  const qc = useQueryClient();
-  return useMutation(({ username, password }: any) => api.login(username, password), {
-    onSuccess: (data) => {
-      qc.invalidateQueries(["portfolio"]);
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ username, password }: LoginCredentials) => login(username, password),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: queryKeys.auth.all });
     },
   });
 }
 
 export function useLogout() {
-  const qc = useQueryClient();
-  return useMutation(() => api.logout(), {
-    onSuccess: () => qc.clear(),
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: logout,
+    onSuccess: createClearCacheSuccessHandler(queryClient),
   });
 }

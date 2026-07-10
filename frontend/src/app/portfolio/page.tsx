@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { createMetadata } from "@/lib/metadata";
 import { ClientPortfolioPage } from "@/components/portfolio/portfolio-page";
-import dynamic from "next/dynamic";
+import { getPortfolioCategories, getPortfolioItems } from "@/services/portfolio-service";
 
 export const metadata: Metadata = createMetadata({ title: "Portfolio", description: "Luxury wedding, couple, pre-wedding, event and maternity photography by Akshay Markad.", path: "/portfolio" });
 
-const ClientOnlyPortfolio = dynamic(() => import("@/components/portfolio/portfolio-page").then((m) => m.ClientPortfolioPage), { ssr: false });
+export default async function PortfolioPage() {
+  const categories = await getPortfolioCategories();
+  const items = await getPortfolioItems();
 
-export default function PortfolioPage() {
-  return <ClientOnlyPortfolio />;
+  return <ClientPortfolioPage categories={categories} items={items} />;
 }

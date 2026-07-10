@@ -1,8 +1,10 @@
-import { api } from "./api";
+import { api, unwrapApiData } from "./api";
 
 export async function uploadImage(file: File) {
-  const fd = new FormData();
-  fd.append("file", file);
-  const res = await api.post("/api/admin/upload", fd, { headers: { "Content-Type": "multipart/form-data" } });
-  return res.data?.data || res.data;
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const response = await api.post("/api/admin/upload", formData);
+
+  return unwrapApiData(response);
 }

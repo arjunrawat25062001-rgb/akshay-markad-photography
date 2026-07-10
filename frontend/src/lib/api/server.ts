@@ -1,4 +1,4 @@
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:8080";
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
 
 async function fetchJson(path: string, opts: RequestInit = {}) {
   const res = await fetch(`${API_BASE}${path}`, { ...opts, credentials: "include" });
@@ -6,7 +6,7 @@ async function fetchJson(path: string, opts: RequestInit = {}) {
   return res.json();
 }
 
-export async function listPortfolioServer(params: Record<string, any> = {}) {
+export async function listPortfolioServer(params: Record<string, string | number | boolean | undefined> = {}) {
   const qs = new URLSearchParams();
   Object.entries(params).forEach(([k, v]) => v !== undefined && qs.set(k, String(v)));
   return fetchJson(`/api/portfolio?${qs.toString()}`);

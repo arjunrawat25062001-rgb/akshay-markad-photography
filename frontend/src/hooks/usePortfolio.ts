@@ -1,14 +1,35 @@
 import { useQuery } from "@tanstack/react-query";
-import { listPortfolio, listCategories, getPortfolioBySlug } from "@/lib/api/portfolio";
+import { listCategories, listPortfolio, getPortfolioBySlug, type ListParams } from "@/lib/api/portfolio";
+import { queryKeys } from "@/lib/react-query/query-keys";
 
-export function usePortfolioList({ page = 0, size = 12, q, category, featured, tags, location }: any) {
-  return useQuery(["portfolio", page, size, q, category, featured, tags, location], () => listPortfolio({ page, size, q, category, featured, tags, location }));
+export type UsePortfolioOptions = ListParams & {
+  enabled?: boolean;
+};
+
+export function usePortfolio(options: UsePortfolioOptions = {}) {
+  const { enabled = true, ...params } = options;
+
+  return useQuery({
+    queryKey: queryKeys.portfolio.list(params),
+    queryFn: () => listPortfolio(params),
+    enabled,
+  });
 }
 
-export function usePortfolioItem(slug: string) {
-  return useQuery(["portfolio-item", slug], () => getPortfolioBySlug(slug), { enabled: !!slug });
+export function usePortfolioItem(slug: string, enabled = true) {
+  return useQuery({
+    queryKey: queryKeys.portfolio.item(slug),
+    queryFn: () => getPortfolioBySlug(slug),
+    enabled: enabled && Boolean(slug),
+  });
 }
 
-export function usePortfolioCategories() {
-  return useQuery(["portfolio-categories"], () => listCategories());
+export function usePortfolioCategories(enabled = true) {
+  return useQuery({
+    queryKey: queryKeys.portfolio.categories(),
+    queryFn: listCategories,
+    enabled,
+  });
 }
+
+export const usePortfolioList = usePortfolio;

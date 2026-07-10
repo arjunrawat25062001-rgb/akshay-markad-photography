@@ -1,6 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
-import { sendContact } from "@/lib/api/contact";
+import { sendContact, type ContactPayload } from "@/lib/api/contact";
 
-export function useSendContact() {
-  return useMutation((payload: any) => sendContact(payload));
+export function useContact() {
+  return useMutation({
+    mutationFn: (payload: ContactPayload) => sendContact(payload),
+  });
 }
+
+export const useSendContact = useContact;
