@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Akshay Markad Photography
 
 Production-ready monorepo scaffold for the Akshay Markad Photography website.
@@ -25,3 +26,6 @@ cd backend && mvn spring-boot:run
 ```
 
 No frontend pages have been created yet.
+=======
+# akshay-markad-photography
+>>>>>>> b8c7680bec209793fbc19d3d6ff3fe1ba36f85a8
